@@ -14,74 +14,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { Sidebar }  from "@/components/contact-sidebar";
 import type { Contact, Message } from "@/types";
-
-const contacts: Contact[] = [
-  {
-    id: "1",
-    name: "Marie Dupont",
-    lastMessage: "D'accord, a demain !",
-    time: "10:30",
-    unread: 2,
-    status: "online",
-  },
-  {
-    id: "2",
-    name: "Jean Martin",
-    lastMessage: "Super, merci pour l'info",
-    time: "09:15",
-    status: "online",
-  },
-  {
-    id: "3",
-    name: "Sophie Bernard",
-    lastMessage: "On se retrouve ou ?",
-    time: "Hier",
-    status: "offline",
-  },
-  {
-    id: "4",
-    name: "Pierre Dubois",
-    lastMessage: "J'ai envoye le document",
-    time: "Hier",
-    status: "typing",
-  },
-  {
-    id: "5",
-    name: "Emma Leroy",
-    lastMessage: "Parfait !",
-    time: "Lun",
-    status: "offline",
-  },
-];
-
-const messages: Message[] = [
-  {
-    id: "1",
-    content: "Salut ! Comment ca va ?",
-    sender: "other",
-    time: "10:00",
-  },
-  { id: "2", content: "Ca va bien et toi ?", sender: "me", time: "10:02" },
-  {
-    id: "3",
-    content: "Super ! Tu es dispo demain pour le projet ?",
-    sender: "other",
-    time: "10:05",
-  },
-  {
-    id: "4",
-    content: "Oui, je suis libre a partir de 14h",
-    sender: "me",
-    time: "10:10",
-  },
-  {
-    id: "5",
-    content: "Parfait, on se retrouve au bureau alors",
-    sender: "other",
-    time: "10:15",
-  },
-  { id: "6", content: "D'accord, a demain !", sender: "other", time: "10:30" },
-];
+import { contacts } from "@/mocks/contacts";
+import { messages } from "@/mocks/messages";
 
 export function ChatLayout() {
   const [selectedContact, setSelectedContact] = useState<Contact>(contacts[0]);
