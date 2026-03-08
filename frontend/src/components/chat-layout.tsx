@@ -1,11 +1,6 @@
 import { useState } from "react";
 import {
-  Send,
-  Phone,
-  Video,
-  MoreVertical,
-  Search,
-  Settings,
+  Send
 } from "lucide-react";
 import {
   ResizablePanelGroup,
@@ -17,23 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-
-interface Contact {
-  id: string;
-  name: string;
-  avatar?: string;
-  lastMessage: string;
-  time: string;
-  unread?: number;
-  status?: "online" | "offline" | "typing";
-}
-
-interface Message {
-  id: string;
-  content: string;
-  sender: "me" | "other";
-  time: string;
-}
+import { Sidebar }  from "@/components/contact-sidebar";
+import type { Contact, Message } from "@/types";
 
 const contacts: Contact[] = [
   {
@@ -112,68 +92,7 @@ export function ChatLayout() {
       <ResizablePanelGroup direction="horizontal" className="h-full">
         {/* Sidebar */}
         <ResizablePanel defaultSize={25} minSize={20} maxSize={35}>
-          <div className="flex h-full flex-col border-r border-border">
-            {/* Sidebar Header */}
-            <div className="flex items-center justify-between border-b border-border p-4">
-              <h1 className="text-xl font-semibold text-foreground">
-                Contacts
-              </h1>
-            </div>
-
-            {/* Contact List */}
-            <ScrollArea className="flex-1">
-              <div className="flex flex-col">
-                {contacts.map((contact) => (
-                  <button
-                    key={contact.id}
-                    onClick={() => setSelectedContact(contact)}
-                    className={cn(
-                      "flex items-center gap-3 p-3 text-left transition-colors hover:bg-muted/50",
-                      selectedContact.id === contact.id && "bg-muted",
-                    )}>
-                    <div className="relative">
-                      <Avatar className="size-12">
-                        <AvatarImage src={contact.avatar} />
-                        <AvatarFallback className="bg-primary/10 text-primary">
-                          {contact.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span
-                        className={`absolute bottom-0 right-0 size-3 rounded-full border-2 border-background ${
-                          contact.status === "online"
-                            ? "bg-green-500"
-                            : contact.status === "typing"
-                              ? "bg-blue-500 animate-pulse"
-                              : "bg-gray-400"
-                        }`}
-                      />
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-foreground">
-                          {contact.name}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {contact.time}
-                        </span>
-                      </div>
-                      <p className="truncate text-sm text-muted-foreground">
-                        {contact.lastMessage}
-                      </p>
-                    </div>
-                    {contact.unread && (
-                      <span className="flex size-5 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
-                        {contact.unread}
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </ScrollArea>
-          </div>
+          <Sidebar contacts={contacts} onSelect={setSelectedContact} />
         </ResizablePanel>
 
         {/* Main Chat Area */}
