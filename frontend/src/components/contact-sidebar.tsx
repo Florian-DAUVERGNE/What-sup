@@ -1,47 +1,46 @@
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ScrollArea } from "./ui/scroll-area";
 import type { Contact } from "@/types";
+import { statusToColor, statusToText } from "@/lib/statusFunctions";
 
-function ContactSidebar({ contacts, onSelect }: { contacts: Contact[]; onSelect: (contact: Contact) => void }) {
+function ContactSidebar({
+  contacts,
+  onSelect,
+}: {
+  contacts: Contact[];
+  onSelect: (contact: Contact) => void;
+}) {
   return (
-    <>
-      {/* Contact List */}
-      <ScrollArea className="flex-1">
-        <div className="p-2 space-y-1">
-          {contacts.map((contact) => (
-            <button
-              key={contact.id}
-              onClick={() => onSelect(contact)}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-accent transition"
-            >
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={contact.avatar} />
-                <AvatarFallback>
-                  {contact.name.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
+    <ScrollArea className="flex-1 h-full">
+      <div className="p-2 space-y-1">
+        {contacts.map((contact) => (
+          <button
+            key={contact.id}
+            onClick={() => onSelect(contact)}
+            className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-accent transition">
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={contact.avatar} />
+              <AvatarFallback>
+                {contact.name.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
 
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-medium">{contact.name}</span>
+            <div className="flex flex-col items-start">
+              <span className="text-sm font-medium">{contact.name}</span>
 
-                <span className="text-xs text-muted-foreground flex items-center gap-1 capitalize">
-                  <span
-                    className={`h-2 w-2 rounded-full ${
-                      contact.status === "online"
-                        ? "bg-green-500"
-                        : contact.status === "typing"
-                        ? "bg-blue-500 animate-pulse"
-                        : "bg-gray-400"
-                    }`}
-                  />
-                  {contact.status ?? "offline"}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </ScrollArea>
-      </>
+              <span className="text-xs text-muted-foreground flex items-center gap-1 capitalize">
+                <span
+                  className={`h-2 w-2 rounded-full ${statusToColor(
+                    contact.status ?? "offline",
+                  )}`}
+                />
+                {statusToText(contact.status ?? "offline")}
+              </span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </ScrollArea>
   );
 }
 
@@ -53,7 +52,13 @@ function HeaderSidebar() {
   );
 }
 
-export function Sidebar({ contacts, onSelect }: { contacts: Contact[]; onSelect: (contact: Contact) => void }) {
+export function Sidebar({
+  contacts,
+  onSelect,
+}: {
+  contacts: Contact[];
+  onSelect: (contact: Contact) => void;
+}) {
   return (
     <div className="flex h-full flex-col border-r border-border">
       <HeaderSidebar />
