@@ -29,6 +29,10 @@ class User
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+    }
 
     public function getId(): ?int
     {
