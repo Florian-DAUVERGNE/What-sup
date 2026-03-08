@@ -2,7 +2,7 @@ import type { Status } from "./status"
 
 export interface Contact {
   id: string
-  name: string
+  username: string
   avatar?: string
   lastMessage: string
   time: string

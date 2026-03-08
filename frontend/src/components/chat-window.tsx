@@ -15,7 +15,7 @@ function ChatWindowTitle({ selectedContact }: { selectedContact: Contact }) {
           <Avatar className="size-10">
             <AvatarImage src={selectedContact.avatar} />
             <AvatarFallback className="bg-primary/10 text-primary">
-              {selectedContact.name
+              {selectedContact.username
                 .split(" ")
                 .map((n) => n[0])
                 .join("")}
@@ -29,7 +29,7 @@ function ChatWindowTitle({ selectedContact }: { selectedContact: Contact }) {
         </div>
         <div>
           <h2 className="font-semibold text-foreground">
-            {selectedContact.name}
+            {selectedContact.username}
           </h2>
           <p className="text-sm text-muted-foreground">
             {statusToText(selectedContact.status ?? "offline")}

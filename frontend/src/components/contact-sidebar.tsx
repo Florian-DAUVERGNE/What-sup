@@ -21,12 +21,12 @@ function ContactSidebar({
             <Avatar className="h-10 w-10">
               <AvatarImage src={contact.avatar} />
               <AvatarFallback>
-                {contact.name.slice(0, 2).toUpperCase()}
+                {contact.username.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
 
             <div className="flex flex-col items-start">
-              <span className="text-sm font-medium">{contact.name}</span>
+              <span className="text-sm font-medium">{contact.username}</span>
 
               <span className="text-xs text-muted-foreground flex items-center gap-1 capitalize">
                 <span
