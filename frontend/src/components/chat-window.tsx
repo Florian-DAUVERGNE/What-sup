@@ -1,4 +1,5 @@
 "use client"
+import { useEffect, useRef } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -41,6 +42,12 @@ function ChatWindowTitle({ selectedContact }: { selectedContact: Contact }) {
 }
 
 function MessageArea({ messages }: { messages: Message[] }) {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <ScrollArea className="flex-1 p-6 h-75">
       <div className="flex flex-col gap-4">
@@ -71,6 +78,7 @@ function MessageArea({ messages }: { messages: Message[] }) {
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
     </ScrollArea>
   );
