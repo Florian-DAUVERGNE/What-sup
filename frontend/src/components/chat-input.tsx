@@ -2,36 +2,56 @@
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
 import { useChatStore } from "@/store/chat-store"
 import { v4 as uuid } from "uuid"
+import type { Message } from "@/types/message"
+import { Send } from "lucide-react"
 
-export default function ChatInput() {
-  const [text, setText] = useState("")
-  const addMessage = useChatStore(s => s.addMessage)
+export default function ChatInput({
+  messageInput,
+  setMessageInput,
+}: {
+  messageInput: string;
+  setMessageInput: (value: string) => void;
+}) {
+  const addMessage = useChatStore((state) => state.addMessage);
 
-  const send = () => {
-    if (!text.trim()) return
+  const handleSend = () => {
+    if (!messageInput.trim()) return;
 
-    addMessage({
+    const newMessage: Message = {
       id: uuid(),
-      content: text,
+      content: messageInput,
       sender: "me",
-      createdAt: new Date()
-    })
+      time: new Date().toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
 
-    setText("")
-  }
+    addMessage(newMessage);
+    setMessageInput("");
+  };
 
   return (
-    <div className="flex gap-2 p-4 border-t">
-      <Input
-        value={text}
-        onChange={e => setText(e.target.value)}
-        placeholder="Message..."
-        onKeyDown={e => e.key === "Enter" && send()}
-      />
-      <Button onClick={send} variant={"outline"}>Send</Button>
+    <div className="border-t border-border p-4">
+      <div className="flex items-center gap-3">
+        <Input
+          placeholder="Tapez votre message..."
+          value={messageInput}
+          onChange={(e) => setMessageInput(e.target.value)}
+          className="flex-1"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+        />
+        <Button size="icon" className="shrink-0" onClick={handleSend}>
+          <Send className="size-4" />
+        </Button>
+      </div>
     </div>
-  )
+  );
 }
