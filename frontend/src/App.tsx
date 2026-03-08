@@ -1,15 +1,5 @@
-import './App.css'
-import ChatWindow from './components/chat-window'
-import ChatInput from './components/chat-input'
+import { ChatLayout } from "./components/chat-layout"
 
-function App() {
-
-  return (
-    <>
-      <ChatWindow></ChatWindow>
-      <ChatInput></ChatInput>
-    </>
-  )
+export default function App() {
+  return <ChatLayout />
 }
-
-export default App
